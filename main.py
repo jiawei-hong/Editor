@@ -16,16 +16,18 @@ class Editor:
         self.root.mainloop()
 
     def openFile(self):
-        filename = filedialog.askopenfilename()
-        self.file = open(filename, 'w+')
+        self.filename = filedialog.askopenfilename()
+        read = open(self.filename, 'r')
         self.text = tk.Text(self.root, width=30, height=30)
         self.text.pack()
-        self.text.insert('insert', self.file.read())
+        self.text.insert('insert', read.read())
+        read.close()
         self.saveFileButton = tk.Button(
             self.root, text='保存檔案', width=50, command=self.saveFile)
         self.saveFileButton.pack(side='bottom')
 
     def saveFile(self):
+        self.file = open(self.filename, 'w+')
         self.file.write(self.text.get("1.0", 'end'))
         self.file.close()
         self.quit()
