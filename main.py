@@ -27,9 +27,14 @@ class Editor:
         self.saveFileButton.pack(side='bottom')
 
     def saveFile(self):
-        self.file = open(self.filename, 'w+')
-        self.file.write(self.text.get("1.0", 'end'))
-        self.file.close()
+        extension = self.filename.split('.')[-1]
+        file = filedialog.asksaveasfile(mode='w', initialfile=self.filename)
+
+        if file is None:
+            return
+
+        file.write(self.text.get(1.0, 'end'))
+        file.close()
         self.quit()
 
     def quit(self):
